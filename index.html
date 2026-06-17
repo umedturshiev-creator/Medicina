@@ -2092,6 +2092,33 @@
       outline: none;
     }
 
+  
+    /* MEDSERVICE LOGO HEADER V58 */
+    .medservice-logo-img-v58 {
+      width: 46px;
+      height: 46px;
+      border-radius: 18px;
+      object-fit: cover;
+      display: block;
+      box-shadow: 0 10px 24px rgba(15, 118, 110, .18);
+      background: #fff;
+    }
+
+    .brand-logo, .logo-mark, .app-logo, .top-logo, .brand-icon {
+      overflow: hidden;
+    }
+
+    .brand-logo img.medservice-logo-img-v58,
+    .logo-mark img.medservice-logo-img-v58,
+    .app-logo img.medservice-logo-img-v58,
+    .top-logo img.medservice-logo-img-v58,
+    .brand-icon img.medservice-logo-img-v58 {
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+      object-fit: cover;
+    }
+
   </style>
 
   <!-- MedService PWA / App Install -->
@@ -2113,7 +2140,7 @@
   <div class="app">
     <header class="topbar">
       <div class="brand-area">
-        <div class="brand-logo">M+</div>
+        <div class="brand-logo"><img class="medservice-logo-img-v58" src="icons/logo-header.png" alt="MedService"></div>
         <div>
           <h1>MedService</h1>
           <p id="topSubtitle">Онлайн-консультация врача для семьи</p>
@@ -3339,7 +3366,7 @@
      * ВАЖНО:
      * Замените ссылку ниже на вашу ссылку Apps Script Web App
      ********************************************************/
-    const API_URL = 'https://script.google.com/macros/s/AKfycbx6S9D14kTj2Zg5NZdqBFDCbVYqHPqKuNDnMscqA0n-E-yyC3qao7KgulNwqG0_Wh7j/exec';
+    const API_URL = 'PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE';
 
     let currentUser = null;
     let childrenCache = [];
@@ -8408,6 +8435,26 @@ await loadAppointments();
           .catch(function(err) { console.warn('MedService service worker error', err); });
       });
     }
+
+  
+    // MedService header logo replacement v58
+    function replaceMedServiceHeaderLogoV58() {
+      const candidates = Array.from(document.querySelectorAll('div, span')).filter(el => {
+        const text = (el.textContent || '').trim();
+        const cls = String(el.className || '').toLowerCase();
+        const nearBrand = cls.includes('logo') || cls.includes('brand') || cls.includes('avatar');
+        return text === 'M+' && nearBrand;
+      });
+
+      candidates.forEach(el => {
+        el.innerHTML = '<img class="medservice-logo-img-v58" src="icons/logo-header.png" alt="MedService">';
+        el.setAttribute('aria-label', 'MedService');
+      });
+    }
+
+    window.addEventListener('load', replaceMedServiceHeaderLogoV58);
+    setTimeout(replaceMedServiceHeaderLogoV58, 300);
+    setTimeout(replaceMedServiceHeaderLogoV58, 1200);
 
   </script>
 </body>
